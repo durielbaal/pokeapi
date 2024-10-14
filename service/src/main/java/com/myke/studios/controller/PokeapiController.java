@@ -27,6 +27,9 @@ public class PokeapiController {
    */
   @GetMapping("/{name}")
   public PokemonDto getPokemon(@PathVariable String name) {
-    return pokeapiService.getPokemonData(name);
+    PokemonDto pkmn =  pokeapiService.getPokemonData(name);
+    pkmn.setHeight(pkmn.height / 10);
+    pkmn.setWeight(pkmn.weight / 10);
+    return pkmn;
   }
 }

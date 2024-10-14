@@ -21,8 +21,8 @@ public class PokeapiService {
 
   /**
    * Searching of pokemon by id number or name.
-   * @param pokemonName aa.
-   * @return aa.
+   * @param pokemonName number or name of pokemon.
+   * @return pokemon general info.
    */
   public PokemonDto getPokemonData(String pokemonName) {
     String url = UriComponentsBuilder.fromHttpUrl(BASE_URL + pokemonName)
