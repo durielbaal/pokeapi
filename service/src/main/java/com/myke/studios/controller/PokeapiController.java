@@ -2,6 +2,7 @@ package com.myke.studios.controller;
 
 import com.myke.studios.dto.PokemonDto;
 import com.myke.studios.service.PokeapiService;
+import com.myke.studios.utils.Endpoints;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v2/pokemon")
+@RequestMapping(Endpoints.POKEMON)
 public class PokeapiController {
   /**
    * Instance of Pokemon api services.
