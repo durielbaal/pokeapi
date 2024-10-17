@@ -1,43 +1,49 @@
 package com.myke.studios.service;
 
 import com.myke.studios.dto.PokemonDto;
-import com.myke.studios.errormanagement.CustomException;
-import com.myke.studios.errormanagement.ErrorType;
 import com.myke.studios.utils.Endpoints;
+import com.myke.studios.utils.genericcomponent.GenericService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
+
 
 /**
  * Service of pokemon api management.
  */
 @Service
-public class PokeapiService {
-  /**
-   * restTemplate to connect API.
-   */
-  private final RestTemplate restTemplate = new RestTemplate();
+public class PokeapiService extends GenericService {
+
+
   /**
    * base URL to connect API.
    */
   protected String pokemonEp = Endpoints.BASE_URL + Endpoints.POKEMON;
 
   /**
-   * Searching of pokemon by id number or name.
-   * @param pokemonName number or name of pokemon.
-   * @return pokemon general info.
+   * Dependency Injection resTemplate.
+   * @param restTemplate .
    */
-  public PokemonDto getPokemonData(String pokemonName) {
-    String url = UriComponentsBuilder.fromHttpUrl(pokemonEp + pokemonName)
-              .toUriString();
-    try {
-      return restTemplate.getForObject(url, PokemonDto.class);
-    } catch (HttpClientErrorException.NotFound e) {
-      throw new CustomException(ErrorType.POKEMON_NOT_FOUND.getMessage());
-    } catch (Exception e) {
-      throw new CustomException(ErrorType.API_REQUEST_FAILED.getMessage());
-    }
+  @Autowired
+  protected PokeapiService(RestTemplate restTemplate) {
+    super(restTemplate);
   }
+
+  /**
+   *  getResponse method specialized in pokemonDto responses, from genericService.
+   * @param pokemonID endpoint.
+   * @return response with pokemonDto type.
+   */
+  public PokemonDto getResponse(String pokemonID) {
+    /**
+     * response.
+     */
+    PokemonDto pkmn = super.getResponse(pokemonEp + pokemonID,PokemonDto.class);
+    pkmn.setHeight(pkmn.height / 10);
+    pkmn.setWeight(pkmn.weight / 10);
+    return pkmn;
+  }
+
+
 }
 
