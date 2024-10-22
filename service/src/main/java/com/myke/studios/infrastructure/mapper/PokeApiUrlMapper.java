@@ -1,11 +1,8 @@
 package com.myke.studios.infrastructure.mapper;
 
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import java.util.Map;
 
 /**
  * Mapper of pokeapi url.

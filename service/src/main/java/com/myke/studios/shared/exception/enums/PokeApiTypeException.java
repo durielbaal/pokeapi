@@ -1,6 +1,6 @@
 package com.myke.studios.shared.exception.enums;
+
 import com.myke.studios.exception.enums.ExceptionCode;
-import com.myke.studios.exception.enums.GenericTypeException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

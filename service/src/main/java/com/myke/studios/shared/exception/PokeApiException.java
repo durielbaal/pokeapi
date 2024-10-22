@@ -1,6 +1,6 @@
 package com.myke.studios.shared.exception;
+
 import com.myke.studios.exception.PokemonException;
-import com.myke.studios.exception.enums.GenericTypeException;
 import com.myke.studios.shared.exception.enums.PokeApiTypeException;
 
 
