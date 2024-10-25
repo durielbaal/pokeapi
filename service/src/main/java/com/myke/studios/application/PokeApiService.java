@@ -1,6 +1,5 @@
 package com.myke.studios.application;
 
-import com.myke.studios.config.KafkaProducer;
 import com.myke.studios.domain.input.PokeApiInputPort;
 import com.myke.studios.infraestructure.dto.PokemonDto;
 import com.myke.studios.infrastructure.api.endpoint.PokeApiEndPoint;
@@ -52,7 +51,7 @@ public class PokeApiService implements PokeApiInputPort {
       getValueMap.put("{nid}",nid);
       String uri = pokeApiUrlMapper.mapUrl(getValueMap,endpoint);
       PokemonDto pkmn = pokeApiEndPoint.doCallGetPokemon(uri);
-      kafkaController.publish(pkmn.toString());
+      kafkaController.publish(pkmn);
       return pkmn;
     } catch (Exception e) {
       throw new PokeApiException(PokeApiTypeException.POKEMON_NOT_FOUND);
