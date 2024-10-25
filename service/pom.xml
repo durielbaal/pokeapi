@@ -42,10 +42,15 @@
             <artifactId>microservice-security-api</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-      <dependency>
-        <groupId>org.projectlombok</groupId>
-        <artifactId>lombok</artifactId>
-        <scope>provided</scope>
-      </dependency>
+        <dependency>
+          <groupId>org.projectlombok</groupId>
+          <artifactId>lombok</artifactId>
+          <scope>provided</scope>
+        </dependency>
+        <dependency>
+          <groupId>com.myke.studios</groupId>
+          <artifactId>microservice-kafka</artifactId>
+          <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 </project>

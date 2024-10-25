@@ -9,13 +9,22 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class PokeApiUrlMapper {
+
+  /**
+   * Base path.
+   */
   @Value("${pokeapi.poke-api.baseUrl}")
   private String pokeapiBaseUrl;
 
 
-
-  public String mapUrl(Map<String,String > pathVarMap, String endpoint){
-    String url=pokeapiBaseUrl.concat(endpoint);
+  /**
+   * Map url.
+   * @param pathVarMap .
+   * @param endpoint .
+   * @return .
+   */
+  public String mapUrl(Map<String, String> pathVarMap, String endpoint) {
+    String url = pokeapiBaseUrl.concat(endpoint);
     for (Map.Entry<String, String> entry : pathVarMap.entrySet()) {
       url = url.replace(entry.getKey(), entry.getValue());
     }
