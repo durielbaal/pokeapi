@@ -1,5 +1,6 @@
 package com.myke.studios.application;
 
+import com.myke.studios.PokemonEvent;
 import com.myke.studios.domain.input.PokeApiInputPort;
 import com.myke.studios.infraestructure.dto.PokemonDto;
 import com.myke.studios.infrastructure.api.endpoint.PokeApiEndPoint;
@@ -44,15 +45,16 @@ public class PokeApiService implements PokeApiInputPort {
    * @return the pokemon itself.
    */
   @Override
-  public PokemonDto getPokemonByNid(String nid) {
+  public PokemonEvent getPokemonByNid(String nid) {
 
     try {
       Map<String, String> getValueMap = new HashMap<String, String>();
       getValueMap.put("{nid}",nid);
       String uri = pokeApiUrlMapper.mapUrl(getValueMap,endpoint);
       PokemonDto pkmn = pokeApiEndPoint.doCallGetPokemon(uri);
-      kafkaController.publish(pkmn);
-      return pkmn;
+      PokemonEvent pokemonEvent = new PokemonEvent(pkmn,"POKEAPI","INSERT");
+      kafkaController.publish(pokemonEvent,"INSERT");
+      return pokemonEvent;
     } catch (Exception e) {
       throw new PokeApiException(PokeApiTypeException.POKEMON_NOT_FOUND);
     }

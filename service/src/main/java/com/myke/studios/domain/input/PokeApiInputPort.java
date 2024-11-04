@@ -1,5 +1,6 @@
 package com.myke.studios.domain.input;
 
+import com.myke.studios.PokemonEvent;
 import com.myke.studios.infraestructure.dto.PokemonDto;
 
 /**
@@ -12,5 +13,5 @@ public interface PokeApiInputPort {
    * @param nid .
    * @return pokemonDto itself.
    */
-  PokemonDto getPokemonByNid(String nid);
+  PokemonEvent getPokemonByNid(String nid);
 }
