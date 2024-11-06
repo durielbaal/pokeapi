@@ -1,11 +1,12 @@
 package com.myke.studios.application;
 
-import com.myke.studios.PokemonEvent;
 import com.myke.studios.domain.input.PokeApiInputPort;
 import com.myke.studios.infraestructure.dto.PokemonDto;
 import com.myke.studios.infrastructure.api.endpoint.PokeApiEndPoint;
 import com.myke.studios.infrastructure.controller.KafkaController;
 import com.myke.studios.infrastructure.mapper.PokeApiUrlMapper;
+import com.myke.studios.pokemonevent.insert.PokemonInsertEvent;
+import com.myke.studios.pokemonevent.insert.PokemonInsertEventBody;
 import com.myke.studios.shared.exception.PokeApiException;
 import com.myke.studios.shared.exception.enums.PokeApiTypeException;
 import java.util.HashMap;
@@ -45,16 +46,17 @@ public class PokeApiService implements PokeApiInputPort {
    * @return the pokemon itself.
    */
   @Override
-  public PokemonEvent getPokemonByNid(String nid) {
+  public PokemonInsertEvent getPokemonByNid(String nid) {
 
     try {
       Map<String, String> getValueMap = new HashMap<String, String>();
       getValueMap.put("{nid}",nid);
       String uri = pokeApiUrlMapper.mapUrl(getValueMap,endpoint);
       PokemonDto pkmn = pokeApiEndPoint.doCallGetPokemon(uri);
-      PokemonEvent pokemonEvent = new PokemonEvent(pkmn,"POKEAPI","INSERT");
-      kafkaController.publish(pokemonEvent,"INSERT");
-      return pokemonEvent;
+      PokemonInsertEvent pokemonInsertEvent =
+          new PokemonInsertEvent(new PokemonInsertEventBody(pkmn.id, pkmn.name));
+      kafkaController.publish(pokemonInsertEvent,pokemonInsertEvent.getHeader().getEventType());
+      return pokemonInsertEvent;
     } catch (Exception e) {
       throw new PokeApiException(PokeApiTypeException.POKEMON_NOT_FOUND);
     }

@@ -1,7 +1,6 @@
 package com.myke.studios.domain.input;
 
-import com.myke.studios.PokemonEvent;
-import com.myke.studios.infraestructure.dto.PokemonDto;
+import com.myke.studios.pokemonevent.insert.PokemonInsertEvent;
 
 /**
  * Interface to connect service - controller.
@@ -13,5 +12,5 @@ public interface PokeApiInputPort {
    * @param nid .
    * @return pokemonDto itself.
    */
-  PokemonEvent getPokemonByNid(String nid);
+  PokemonInsertEvent getPokemonByNid(String nid);
 }

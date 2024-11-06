@@ -1,9 +1,8 @@
 package com.myke.studios.infrastructure.controller;
 
-import com.myke.studios.PokemonEvent;
 import com.myke.studios.domain.input.PokeApiInputPort;
-import com.myke.studios.infraestructure.dto.PokemonDto;
 import com.myke.studios.jwt.JwtService;
+import com.myke.studios.pokemonevent.insert.PokemonInsertEvent;
 import com.myke.studios.shared.Constants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,7 +34,7 @@ public class PokeApiController {
    * @return pokemonDto.
    */
   @GetMapping(path = Constants.POKEMON_API_POKEMON_ID)
-  public PokemonEvent getPokemonByNid(@PathVariable String nid) {
+  public PokemonInsertEvent getPokemonByNid(@PathVariable String nid) {
     return this.pokeApiInputPort.getPokemonByNid(nid);
   }
 }
