@@ -54,7 +54,7 @@ public class PokeApiService implements PokeApiInputPort {
       String uri = pokeApiUrlMapper.mapUrl(getValueMap,endpoint);
       PokemonDto pkmn = pokeApiEndPoint.doCallGetPokemon(uri);
       PokemonInsertEvent pokemonInsertEvent =
-          new PokemonInsertEvent(new PokemonInsertEventBody(pkmn.id, pkmn.name));
+          new PokemonInsertEvent(new PokemonInsertEventBody(pkmn.pokedexNumber, pkmn.name));
       kafkaController.publish(pokemonInsertEvent,pokemonInsertEvent.getHeader().getEventType());
       return pokemonInsertEvent;
     } catch (Exception e) {
