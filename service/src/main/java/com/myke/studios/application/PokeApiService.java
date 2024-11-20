@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 /**
@@ -45,6 +47,7 @@ public class PokeApiService implements PokeApiInputPort {
    * @param nid name or id of pokemon in pokedex.
    * @return the pokemon itself.
    */
+  @Cacheable(value = "pokemonCache", key = "#nid")
   @Override
   public PokemonInsertEvent getPokemonByNid(String nid) {
 
