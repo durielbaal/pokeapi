@@ -13,6 +13,16 @@ public class Constants {
    * Endpoint to get pokemon by id.
    */
   public static final String POKEMON_API_POKEMON_ID = "/getPokemon/{nid}";
+
+  /**
+   * Base path to user management.
+   */
+  public static final String USER_MANAGEMENT_BASE_PATH = "/api/auth";
+
+  /**
+   * REGISTER.
+   */
+  public static final String USER_MANAGEMENT_REGISTER = "/register";
   /**
    * Endpoint to send a message through kafka.
    */

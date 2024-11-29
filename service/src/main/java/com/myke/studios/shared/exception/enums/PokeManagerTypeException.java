@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
  */
 @RequiredArgsConstructor
 @Getter
-public enum PokeApiTypeException {
+public enum PokeManagerTypeException {
   /**
    * Pokemon not found enum exception.
    */

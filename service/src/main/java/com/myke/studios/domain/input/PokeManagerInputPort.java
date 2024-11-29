@@ -5,7 +5,7 @@ import com.myke.studios.pokemonevent.insert.PokemonInsertEvent;
 /**
  * Interface to connect service - controller.
  */
-public interface PokeApiInputPort {
+public interface PokeManagerInputPort {
 
   /**
    * Get pokemon by nid.
