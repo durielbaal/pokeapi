@@ -5,6 +5,8 @@ import com.myke.studios.infraestructure.dto.UserCredentialsDto;
 import com.myke.studios.infrastructure.controller.KafkaController;
 import com.myke.studios.shared.exception.UserManagerException;
 import com.myke.studios.shared.exception.enums.UserManagerTypeException;
+import com.myke.studios.userevent.login.UserLoginBody;
+import com.myke.studios.userevent.login.UserLoginEvent;
 import com.myke.studios.userevent.register.UserRegisterBody;
 import com.myke.studios.userevent.register.UserRegisterEvent;
 import lombok.RequiredArgsConstructor;
@@ -49,5 +51,27 @@ public class UserManagerService implements UserManagementInputPort {
       throw new UserManagerException(UserManagerTypeException.UNEXPECTED_REGISTER_ERROR);
     }
 
+  }
+
+  /**
+   * Login of user system.
+   * @param userCredentialsDto credentials.
+   * @return user login event.
+   */
+  @Override
+  public UserLoginEvent login(UserCredentialsDto userCredentialsDto) {
+    try {
+      UserLoginBody userLoginBody = new UserLoginBody();
+      userLoginBody.setUsername(userCredentialsDto.getUsername());
+      userLoginBody.setPassword(passwordEncoder.encode(userCredentialsDto.getPassword()));
+      UserLoginEvent userLoginEvent =
+          new UserLoginEvent(userLoginBody);
+      kafkaController.publish(userLoginEvent,userLoginEvent
+          .getHeader()
+          .getEventType());
+      return userLoginEvent;
+    } catch (Exception e) {
+      throw new UserManagerException(UserManagerTypeException.UNEXPECTED_REGISTER_ERROR);
+    }
   }
 }

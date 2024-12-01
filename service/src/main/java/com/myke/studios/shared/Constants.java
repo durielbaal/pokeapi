@@ -24,6 +24,11 @@ public class Constants {
    */
   public static final String USER_MANAGEMENT_REGISTER = "/register";
   /**
+   * REGISTER.
+   */
+  public static final String USER_MANAGEMENT_LOGIN = "/login";
+
+  /**
    * Endpoint to send a message through kafka.
    */
   public static final String SEND_MESSAGE = "/send";

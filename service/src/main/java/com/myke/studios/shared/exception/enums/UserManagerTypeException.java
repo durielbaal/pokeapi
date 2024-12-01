@@ -15,7 +15,13 @@ public enum UserManagerTypeException {
    * User not found enum exception.
    */
   UNEXPECTED_REGISTER_ERROR(ExceptionCode.C500000004.name(),
-      HttpStatus.NOT_FOUND,"Unexpected register error");
+      HttpStatus.NOT_FOUND,"Unexpected register error"),
+
+  /**
+   * User login failed
+   */
+  UNEXPECTED_REGISTER_LOGIN(ExceptionCode.C500000005.name(),
+  HttpStatus.NOT_FOUND,"Unexpected Login error");
 
   /**
    * Code of Exception.

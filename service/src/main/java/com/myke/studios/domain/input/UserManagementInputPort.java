@@ -1,6 +1,7 @@
 package com.myke.studios.domain.input;
 
 import com.myke.studios.infraestructure.dto.UserCredentialsDto;
+import com.myke.studios.userevent.login.UserLoginEvent;
 import com.myke.studios.userevent.register.UserRegisterEvent;
 
 /**
@@ -14,4 +15,5 @@ public interface UserManagementInputPort {
    * @return Event with meta info and the user itself.
    */
   public UserRegisterEvent register(UserCredentialsDto userDto);
+  public UserLoginEvent login(UserCredentialsDto userDto);
 }
