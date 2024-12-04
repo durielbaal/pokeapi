@@ -18,7 +18,7 @@ public enum UserManagerTypeException {
       HttpStatus.NOT_FOUND,"Unexpected register error"),
 
   /**
-   * User login failed
+   * User login failed.
    */
   UNEXPECTED_REGISTER_LOGIN(ExceptionCode.C500000005.name(),
   HttpStatus.NOT_FOUND,"Unexpected Login error");

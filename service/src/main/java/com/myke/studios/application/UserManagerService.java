@@ -1,5 +1,6 @@
 package com.myke.studios.application;
 
+import com.myke.studios.constant.ConstantEvent;
 import com.myke.studios.domain.input.UserManagementInputPort;
 import com.myke.studios.infraestructure.dto.UserCredentialsDto;
 import com.myke.studios.infrastructure.controller.KafkaController;
@@ -10,6 +11,7 @@ import com.myke.studios.userevent.login.UserLoginEvent;
 import com.myke.studios.userevent.register.UserRegisterBody;
 import com.myke.studios.userevent.register.UserRegisterEvent;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +37,7 @@ public class UserManagerService implements UserManagementInputPort {
    * @return userRegisterEvent.
    */
   @Override
-  public UserRegisterEvent register(UserCredentialsDto userCredentialsDto) {
+  public ResponseEntity<String> register(UserCredentialsDto userCredentialsDto) {
     try {
       UserRegisterBody userRegisterBody = new UserRegisterBody();
       userRegisterBody.setUsername(userCredentialsDto.getUsername());
@@ -43,10 +45,14 @@ public class UserManagerService implements UserManagementInputPort {
 
       UserRegisterEvent userRegisterEvent =
           new UserRegisterEvent(userRegisterBody);
-      kafkaController.publish(userRegisterEvent,userRegisterEvent
-          .getHeader()
-          .getEventType());
-      return userRegisterEvent;
+      kafkaController.publish(userRegisterEvent,
+          userRegisterEvent
+              .getHeader()
+              .getEventType(),
+          userRegisterEvent
+              .getHeader()
+              .getId());
+      return ResponseEntity.ok("Register request completed... sending to database.");
     } catch (Exception e) {
       throw new UserManagerException(UserManagerTypeException.UNEXPECTED_REGISTER_ERROR);
     }
@@ -59,17 +65,21 @@ public class UserManagerService implements UserManagementInputPort {
    * @return user login event.
    */
   @Override
-  public UserLoginEvent login(UserCredentialsDto userCredentialsDto) {
+  public ResponseEntity<String> login(UserCredentialsDto userCredentialsDto) {
     try {
       UserLoginBody userLoginBody = new UserLoginBody();
       userLoginBody.setUsername(userCredentialsDto.getUsername());
       userLoginBody.setPassword(passwordEncoder.encode(userCredentialsDto.getPassword()));
       UserLoginEvent userLoginEvent =
           new UserLoginEvent(userLoginBody);
-      kafkaController.publish(userLoginEvent,userLoginEvent
-          .getHeader()
-          .getEventType());
-      return userLoginEvent;
+      kafkaController.publish(userLoginEvent,
+          userLoginEvent
+              .getHeader()
+              .getEventType(),
+          userLoginEvent
+              .getHeader()
+              .getId());
+      return ResponseEntity.ok("login request completed...sending to database");
     } catch (Exception e) {
       throw new UserManagerException(UserManagerTypeException.UNEXPECTED_REGISTER_ERROR);
     }

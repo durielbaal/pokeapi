@@ -1,5 +1,6 @@
 package com.myke.studios.application;
 
+import com.myke.studios.constant.ConstantEvent;
 import com.myke.studios.domain.input.PokeManagerInputPort;
 import com.myke.studios.infraestructure.dto.PokemonDto;
 import com.myke.studios.infrastructure.api.endpoint.PokeApiEndPoint;
@@ -53,7 +54,13 @@ public class PokeManagerService implements PokeManagerInputPort {
     PokemonDto pkmn = pokeApiEndPoint.doCallGetPokemon(uri);
     PokemonInsertEvent pokemonInsertEvent =
         new PokemonInsertEvent(new PokemonInsertEventBody(pkmn.pokedexNumber, pkmn.name));
-    kafkaController.publish(pokemonInsertEvent,pokemonInsertEvent.getHeader().getEventType());
+    kafkaController.publish(pokemonInsertEvent,
+        pokemonInsertEvent
+            .getHeader()
+            .getEventType(),
+        pokemonInsertEvent
+            .getHeader()
+            .getId());
     return pokemonInsertEvent;
 
   }
